@@ -115,7 +115,6 @@ Post.findSingleById = function(id, visitorId) {
             reject()
             return
         }
-        
         let posts = await Post.reusablePostQuery([
             {$match: {_id: new ObjectID(id)}}
         ], visitorId)
@@ -163,6 +162,13 @@ Post.search = function(searchTerm) {
       } else { 
         reject()
       }
+    })
+  }
+
+  Post.countPostsByAuthor = function(id) {
+    return new Promise(async (resolve, reject) => {
+      let postCount = await postsCollection.countDocuments({author: id})
+      resolve(postCount)
     })
   }
 
